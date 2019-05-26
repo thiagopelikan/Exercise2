@@ -1,6 +1,8 @@
 package br.com.pelikan.exercise2;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -23,12 +25,11 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 0;
-
-   // private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,30 +44,19 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.captureButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                File directory = getFilesDir();
-//                File file = new File(directory, "fname_" +
-//                        String.valueOf(System.currentTimeMillis()) + ".jpg");
-//                if(!file.exists()){
-//                    try {
-//                        file.createNewFile();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                imageUri = FileProvider.getUriForFile(
-//                        MainActivity.this,
-//                        "br.com.pelikan.exercise2.fileprovider",
-//                        file);
-//                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
+
+                File directory = getFilesDir();
+                File file = new File(directory, "fname_" +
+                        String.valueOf(System.currentTimeMillis()) + ".jpg");
+                if(!file.exists()){
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-//
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"fname_" +
-//                        String.valueOf(System.currentTimeMillis()) + ".jpg"));
-//                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
-//                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             }
         });
     }
